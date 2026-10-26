@@ -44,10 +44,10 @@
         [
           "19:17",
           "大丸京都店",
-          "01:00"
+          "00:30"
         ],
         [
-          "20:29",
+          "20:00",
           "牛舌檸檬 京都店",
           "01:00"
         ],
@@ -171,9 +171,9 @@
           "01:00"
         ],
         [
-          "09:33",
-          "名古屋城 天守閣",
-          "01:00"
+          "10:00",
+          "榮商圈・Sakaechika 地下商店街",
+          "00:40"
         ],
         [
           "11:00",
@@ -215,14 +215,15 @@
   ],
   "spots": {
     "二條城": "夜間點燈活動需另行購票，請核對入場時間。",
-    "名古屋城 天守閣": "名古屋城天守閣目前不開放入內，可參觀城內其他區域。",
-    "中部國際機場": "原排 17:22 到達，距 19:00 起飛只有 1 小時 38 分，建議提前抵達。"
+    "中部國際機場": "回程 IT269 預定 19:40 起飛、22:35 抵達高雄；原訂 17:22 到機場，約提前 2 小時 18 分鐘。",
+    "牛舌檸檬 京都店": "已訂位：10/30（五）20:00，牛たんの檸檬 京都店；建議準時，店家採約60分鐘用餐制。",
+    "榮商圈・Sakaechika 地下商店街": "主要商店約 10:00 開始營業。西村裕二周邊可順路到附近栄 Loft 找找，但庫存未確認。"
   },
   "hints": [
-    "機場入境、行李寄放和京都交通請預留彈性時間。",
+    "已訂位牛舌檸檬京都店 20:00；大丸改停留30分鐘，19:47左右離開較從容。京都車站周邊可順路買抹茶／焙茶。",
     "貴船神社距京都市中心較遠；二條城是夜間活動，請留意最後赴名古屋的交通。",
     "犬山城和熱田神宮距離較遠，建議提早查交通班次。",
-    "名古屋城天守閣關閉；回程國際線最好提早到機場。"
+    "上午改逛榮商圈／Sakaechika，物販多在10:00營業；11:00 名古屋 PARCO 行程保留。回程 IT269 19:40 起飛，17:22 預計到機場。"
   ],
   "packing": {
     "🎟️ 證件與票券": [
@@ -243,5 +244,123 @@
       "回程提早抵達 NGO 機場",
       "伴手禮清單"
     ]
+  },
+  "flights": [
+    {
+      "date": "2026-10-30",
+      "number": "IT284",
+      "airline": "台灣虎航 Tigerair Taiwan",
+      "from": "KHH",
+      "to": "KIX",
+      "departure": "06:55",
+      "arrival": "10:40",
+      "checkedBagNotes": "去程其中一位旅客加購託運 15 kg；另一位未加購"
+    },
+    {
+      "date": "2026-11-02",
+      "number": "IT269",
+      "airline": "台灣虎航 Tigerair Taiwan",
+      "from": "NGO",
+      "to": "KHH",
+      "departure": "19:40",
+      "arrival": "22:35",
+      "checkedBagNotes": "回程其中一位旅客加購託運 25 kg；另一位未加購"
+    }
+  ],
+  "reservations": [
+    {
+      "date": "2026-10-30",
+      "time": "20:00",
+      "place": "牛舌檸檬 京都店",
+      "status": "已訂位（依旅客提供）",
+      "note": "店家用餐時間約 60 分鐘；超過訂位時間 10 分鐘未聯絡可能取消",
+      "source": "https://www.store-gyutan-lemon.com/"
+    }
+  ],
+  "shopping": {
+    "kyoto": [
+      {
+        "name": "LOA THE OIL 髮油",
+        "priority": "京都優先",
+        "place": "HIRO GINZA BARBERSHOP 京都本店",
+        "area": "京都河原町／四條",
+        "description": "已查到店家販售紀錄，可在河原町逛街時順路詢問。屬理髮沙龍，僅買商品與香味庫存建議先電話確認。",
+        "mapQuery": "HIRO GINZA BARBERSHOP 京都本店",
+        "url": "https://www.hiroginza.com/salon/kyoto/"
+      },
+      {
+        "name": "UNIQLO、MUJI、mont-bell、SHIRO",
+        "priority": "兩地皆可找",
+        "place": "京都四條／京都站周邊",
+        "area": "京都",
+        "description": "列入共通購物清單，看到順路門市再逛；SHIRO 可於 10/30 大丸京都店留意。",
+        "mapQuery": "大丸京都店 SHIRO",
+        "url": "https://shiro-shiro.jp/"
+      }
+    ],
+    "nagoya": [
+      {
+        "name": "西村裕二周邊商品",
+        "priority": "名古屋優先",
+        "place": "栄 Loft（SAKAE NOVA 3–6F）",
+        "area": "榮商圈",
+        "description": "栄 Loft 10:00–20:00，與 11/2 榮商圈行程相近；目前只能確認 Loft 店面，無法確認西村裕二周邊當日有貨。",
+        "mapQuery": "栄ロフト SAKAE NOVA",
+        "url": "https://www.loft.co.jp/shop_list/detail.php?shop_id=525"
+      },
+      {
+        "name": "UNIQLO、MUJI、mont-bell、SHIRO",
+        "priority": "兩地皆可找",
+        "place": "榮商圈／名古屋車站",
+        "area": "名古屋",
+        "description": "視行程順路購買；SHIRO 可於 11/1 已安排的 Gate Tower Mall 或名古屋站周邊尋找。",
+        "mapQuery": "SHIRO タカシマヤ ゲートタワーモール店",
+        "url": "https://shiro-shiro.jp/"
+      }
+    ]
+  },
+  "teaNotes": [
+    {
+      "name": "HOHO HOJICHA 焙茶",
+      "location": "京都站 1F おみやげ小路 京小町",
+      "hours": "08:30–20:00（物販）",
+      "route": "10/30 京都伊勢丹前後，或 10/31 離開京都前",
+      "description": "買焙茶茶葉：京都站店為物販；八條口「みやこみち」另有外帶飲料店 09:00–20:00。",
+      "mapQuery": "HOHO HOJICHA 京都駅店 京小町",
+      "url": "https://www.hohohojicha.com/"
+    },
+    {
+      "name": "祇園辻利（辻利）",
+      "location": "京都站八條口 Asty Road",
+      "hours": "08:30–21:00",
+      "route": "10/30 住飯店前後／10/31 京都站",
+      "description": "就在京都站八條口側，買茶葉與伴手禮很方便。",
+      "mapQuery": "祇園辻利 京都駅八条口店",
+      "url": "https://www.giontsujiri.co.jp/store/hachijo-guchi/"
+    },
+    {
+      "name": "丸久小山園",
+      "location": "JR 京都伊勢丹 B1 茗茶專櫃",
+      "hours": "10:00–20:00",
+      "route": "10/30 13:46 京都伊勢丹（最順路）",
+      "description": "以買抹茶粉為主。部分品項限量、可能缺貨，且品項／販售限制須以當日現場為準。",
+      "mapQuery": "丸久小山園 ジェイアール京都伊勢丹店",
+      "url": "https://www.marukyu-koyamaen.co.jp/motoan.html"
+    },
+    {
+      "name": "中村藤吉",
+      "location": "JR 京都伊勢丹 B1 茶葉專櫃／3F 京都店",
+      "hours": "B1 隨百貨、3F 茶葉 11:00–21:00",
+      "route": "10/30 13:46 京都伊勢丹（最順路）",
+      "description": "B1 可買茶葉與伴手禮；3F 也有咖啡內用。10/30 19:17 大丸京都 B1 另有物販店。",
+      "mapQuery": "中村藤吉本店 ジェイアール京都伊勢丹店",
+      "url": "https://tokichi.jp/pages/stores"
+    }
+  ],
+  "routeNotes": {
+    "JR京都伊勢丹": "順路抹茶筆記：丸久小山園 B1、中村藤吉 B1／3F；京都站還有 HOHO 焙茶、祇園辻利八條口。",
+    "大丸京都店": "可找 SHIRO 與中村藤吉 B1；因 20:00 牛舌已訂位，此處留 30 分鐘。",
+    "榮商圈・Sakaechika 地下商店街": "榮商圈可順路逛 Sakaechika、栄 Loft；大多 10:00 才開門，西村裕二周邊庫存須現場確認。",
+    "高島屋 Gate Tower Mall": "SHIRO 有 Gate Tower Mall 店；UNIQLO／MUJI／mont-bell 可當作有空再逛的共通購物清單。"
   }
 }
