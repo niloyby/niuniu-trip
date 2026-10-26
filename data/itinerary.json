@@ -348,7 +348,7 @@
         "priority": "兩地皆可找",
         "place": "京都站／四條河原町周邊",
         "area": "京都",
-        "description": "列入兩地共通購物清單；已移除原本大丸京都店停靠，SHIRO 等店舖以現場順路為準。",
+        "description": "列入兩地共通購物清單；京都站／四條河原町沿途有空再找 SHIRO 等品牌。",
         "mapQuery": "京都河原町 SHIRO",
         "url": "https://shiro-shiro.jp/"
       }
@@ -407,7 +407,7 @@
       "location": "JR 京都伊勢丹 B1 茶葉專櫃／3F 京都店",
       "hours": "B1 隨百貨、3F 茶葉 11:00–21:00",
       "route": "10/30 13:46 京都伊勢丹（最順路）",
-      "description": "B1 可買茶葉與伴手禮；3F 也有咖啡內用。10/30 19:17 大丸京都 B1 另有物販店。",
+      "description": "JR 京都伊勢丹 B1 可買茶葉與伴手禮，3F 京都店另可內用；10/30 13:46 逛伊勢丹時最順路。",
       "mapQuery": "中村藤吉本店 ジェイアール京都伊勢丹店",
       "url": "https://tokichi.jp/pages/stores"
     }

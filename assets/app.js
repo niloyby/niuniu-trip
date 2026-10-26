@@ -11,7 +11,7 @@ let teaNotes=[];
 let routeNotes={};
 
 let current=0;
-function category(name){if(/機場/.test(name))return ['✈️','機場','#e7e0f4'];if(/酒店|飯店/.test(name))return ['🏡','住宿','#f8d9d3'];if(/站$/.test(name))return ['🚉','交通','#dbecd6'];if(/肉|鰻|檸檬|Pomme|焼肉/.test(name))return ['🍡','美食','#f9e0b4'];if(/店|PARCO|伊勢丹|大丸|Mall|商店街|任天堂/.test(name))return ['🛍️','購物','#e8e1f8'];return ['⛩️','景點','#dbeefa'];}
+function category(name){if(/機場/.test(name))return ['✈️','機場','#e7e0f4'];if(/酒店|飯店/.test(name))return ['🏡','住宿','#f8d9d3'];if(/站$/.test(name))return ['🚉','交通','#dbecd6'];if(/肉|鰻|檸檬|Pomme|焼肉/.test(name))return ['🍡','美食','#f9e0b4'];if(/店|PARCO|伊勢丹|大丸|Mall|商店街|任天堂|BEAMS/.test(name))return ['🛍️','購物','#e8e1f8'];return ['⛩️','景點','#dbeefa'];}
 function duration(d){const [h,m]=d.split(':').map(Number);return h===0&&m===0?'轉乘或經過':(h?h+' 小時 ':'')+(m?m+' 分鐘':'');}
 
 function googleWalkingLink(segment){
