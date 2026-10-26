@@ -49,7 +49,7 @@ const motionButton=$('#motionSwitch');const motionLabel=$('#motionStatus');let p
 // Preserve accessibility without silently making the page seem broken: announce state and show a visible override.
 let animEnabled=!preferredReduced;
 try{const val=localStorage.getItem('bearcow-v3-motion');if(val!==null)animEnabled=val==='on'}catch(e){}
-function refreshMotion(){document.body.classList.toggle('motion-on',animEnabled);motionButton.setAttribute('aria-pressed',String(animEnabled));motionButton.textContent=animEnabled?'✨ 關閉動畫':'✨ 開啟動畫';motionLabel.textContent=animEnabled?'動畫正在播放｜小熊揮手、企鵝拍翅、火車晃動':'動畫目前關閉'+(preferredReduced?'（偵測到系統減少動態效果）':'')+'｜按右側開啟';}
+function refreshMotion(){document.body.classList.toggle('motion-on',animEnabled);motionButton.setAttribute('aria-pressed',String(animEnabled));motionButton.textContent=animEnabled?'✨ 關閉動畫':'✨ 開啟動畫';motionLabel.textContent=animEnabled?'動畫正在播放｜小熊揮手、企鵝探頭揮翅、火車晃動':'動畫目前關閉'+(preferredReduced?'（偵測到系統減少動態效果）':'')+'｜按右側開啟';}
 motionButton.addEventListener('click',()=>{animEnabled=!animEnabled;try{localStorage.setItem('bearcow-v3-motion',animEnabled?'on':'off')}catch(e){}refreshMotion();draw();});
 const today=Date.now();const start=Date.parse('2026-10-30T06:55:00+08:00');if(today<start)$('#dayCount').textContent=Math.ceil((start-today)/86400000)+' 天';
 refreshMotion();
