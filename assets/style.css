@@ -23,3 +23,13 @@ body.motion-on .train{animation:trainFloat 1.5s ease-in-out infinite;transform-o
 .route-extra{margin-top:10px;padding:8px 9px;border-radius:11px;background:#edf7ec;font-size:12px;font-weight:750}
 .reservation-pill{background:#f3a99f;border:2px solid var(--ink);border-radius:12px;font-size:12px;padding:4px 7px;margin-top:8px;font-weight:900}
 @media(max-width:470px){.site-nav .nav-btn{font-size:11px;padding:6px 7px}.brand{font-size:12px}.note-item{padding:12px}}
+
+/* East Kyoto evening walking route, 2026-10-30 */
+.walk-card{padding:16px 17px;margin:0 0 20px;background:#f9f1dc}
+.walk-heading{font-size:16px;font-weight:950;margin:0 0 6px}
+.walk-subtitle{font-size:12px;line-height:1.65;color:#786b61;margin-bottom:11px}
+.walk-legs{display:grid;gap:8px}
+.walk-leg{display:flex;flex-direction:column;gap:3px;background:#fffef9;border:2px solid #423c39;border-radius:13px;padding:9px 12px;color:#423c39}
+.walk-leg b{font-size:13px}.walk-leg span{font-size:12px}.walk-leg .walk-map{font-weight:900;color:#356479}
+.walk-leg:hover{background:#f7f1e9}
+body.motion-on .walk-card{animation:cardEntrance .5s var(--ease) both}

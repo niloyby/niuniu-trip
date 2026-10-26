@@ -9,14 +9,33 @@ let reservations=[];
 let shopping={};
 let teaNotes=[];
 let routeNotes={};
+
 let current=0;
 function category(name){if(/機場/.test(name))return ['✈️','機場','#e7e0f4'];if(/酒店|飯店/.test(name))return ['🏡','住宿','#f8d9d3'];if(/站$/.test(name))return ['🚉','交通','#dbecd6'];if(/肉|鰻|檸檬|Pomme|焼肉/.test(name))return ['🍡','美食','#f9e0b4'];if(/店|PARCO|伊勢丹|大丸|Mall|商店街|任天堂/.test(name))return ['🛍️','購物','#e8e1f8'];return ['⛩️','景點','#dbeefa'];}
 function duration(d){const [h,m]=d.split(':').map(Number);return h===0&&m===0?'轉乘或經過':(h?h+' 小時 ':'')+(m?m+' 分鐘':'');}
+
+function googleWalkingLink(segment){
+  const q={api:'1',origin:segment.origin,destination:segment.destination,travelmode:'walking'};
+  const params=new URLSearchParams(q);
+  if(segment.waypoints&&segment.waypoints.length)params.set('waypoints',segment.waypoints.join('|'));
+  return 'https://www.google.com/maps/dir/?'+params.toString();
+}
+function renderWalkingRoute(day){
+  const target=$('#walkingRoute');
+  if(!target)return;
+  if(!day.walkingRoute){target.innerHTML='';target.classList.add('hidden');return;}
+  const route=day.walkingRoute;
+  target.classList.remove('hidden');
+  target.innerHTML='<div class="walk-heading">🚶 '+esc(route.title)+'</div>'+
+    '<p class="walk-subtitle">'+esc(route.subtitle)+'</p>'+
+    '<div class="walk-legs">'+route.segments.map(s=>'<a class="walk-leg" href="'+esc(googleWalkingLink(s))+'" target="_blank" rel="noopener noreferrer"><b>'+esc(s.label)+'</b><span>'+esc(s.description)+'</span><span class="walk-map">Google Maps 步行導航 ↗</span></a>').join('')+'</div>';
+}
+
 function draw(){const d=days[current];$('#dateRail').innerHTML=days.map((e,i)=>'<button type="button" class="day-button '+(i===current?'selected':'')+'" data-day="'+i+'" aria-pressed="'+(i===current)+'"><small>DAY '+(i+1)+'</small><strong>'+e.date.slice(5).replace('-','/')+'</strong><span class="dow">週'+e.dow+'</span></button>').join('');
 $('#dateRail').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{current=Number(b.dataset.day);draw();}));
 $('#dayTitle').innerHTML='<div class="day-icon">'+esc(d.emoji)+'</div><div><span>DAY '+(current+1)+' / 4 · '+esc(d.date)+'</span><h3>'+esc(d.title)+'</h3><p>慢慢走，把美好的風景收進心裡 ♡</p></div>';
 $('#stops').innerHTML=d.stops.map((s,i)=>{const [time,name,len]=s;const [em,tag,bg]=category(name);const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);return '<article class="stop" style="--index:'+i+'"><span class="stop-time">'+esc(time)+'</span><span class="stop-dot"></span><div class="stop-card '+(spots[name]?'warning':'')+'"><div class="stop-name">'+em+' '+esc(name)+'</div><div class="stop-metas"><span class="chip" style="background:'+bg+'">'+tag+'</span><span class="stop-length">⏱ '+duration(len)+'</span><a class="maplink" href="'+map+'" target="_blank" rel="noopener noreferrer">地圖 ↗</a></div>'+(spots[name]?'<div class="warning-text">⚠ '+esc(spots[name])+'</div>':'')+(routeNotes[name]?'<div class="route-extra">🛍️ '+esc(routeNotes[name])+'</div>':'')+(reservations.some(r=>r.date===d.date&&r.place===name)?'<div class="reservation-pill">🍋 已訂位 · '+esc(reservations.find(r=>r.date===d.date&&r.place===name).time)+'</div>':'')+'</div></article>'}).join('');
-$('#dayHint').textContent=hints[current];}
+$('#dayHint').textContent=hints[current];renderWalkingRoute(d);}
 const tabs=['trip','flight','prep','notes'];
 function showTab(t){tabs.forEach(x=>{$('#view-'+x).classList.toggle('hidden',x!==t);document.querySelector('[data-tab='+x+']').setAttribute('aria-selected',String(x===t));});}
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
