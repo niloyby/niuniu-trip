@@ -9,6 +9,7 @@ let reservations=[];
 let shopping={};
 let teaNotes=[];
 let routeNotes={};
+let railSchedules=[];
 
 let current=0;
 function category(name){if(/機場/.test(name))return ['✈️','機場','#e7e0f4'];if(/酒店|飯店/.test(name))return ['🏡','住宿','#f8d9d3'];if(/站$/.test(name))return ['🚉','交通','#dbecd6'];if(/肉|鰻|檸檬|Pomme|焼肉/.test(name))return ['🍡','美食','#f9e0b4'];if(/店|PARCO|伊勢丹|大丸|Mall|商店街|任天堂|BEAMS/.test(name))return ['🛍️','購物','#e8e1f8'];return ['⛩️','景點','#dbeefa'];}
@@ -79,6 +80,25 @@ function paintNotes(){
   $('#teaNotes').innerHTML=teaNotes.map(n=>'<article class="paper note-item"><div class="note-top"><span class="note-title">🍵 '+esc(n.name)+'</span><span class="note-priority">'+esc(n.hours)+'</span></div><p class="note-detail">'+esc(n.location)+'</p><p>📍 '+esc(n.route)+'</p><p>'+esc(n.description)+'</p><div class="note-links">'+noteLink('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(n.mapQuery),'地圖')+noteLink(n.url,'官方資訊')+'</div></article>').join('');
 }
 
+
+function paintRailSchedules(){
+  for(const route of railSchedules){
+    const target=$('#'+route.key+'Choices');
+    if(!target)continue;
+    target.innerHTML=
+      '<p class="rail-context">'+esc(route.arrivalContext)+'｜'+esc(route.purpose)+'</p>'+
+      route.options.map(opt=>{
+        const main=opt.id===route.recommendation;
+        return '<div class="rail-option '+(main?'recommended':'')+'"><div class="rail-train">'+esc(opt.name)+(main?' <span class="rail-choice-tag">推薦</span>':'')+'</div>'+
+          '<div class="rail-time">'+esc(opt.depart)+' → '+esc(opt.arrive)+'</div>'+
+          '<div class="rail-note">'+esc(opt.note)+'</div></div>';
+      }).join('')+
+      '<div class="rail-warning">⚠ '+esc(route.warning)+'</div>'+
+      '<a class="rail-link" href="'+esc(route.sourceUrl)+'" target="_blank" rel="noopener noreferrer">查看時刻表・出發前再核對 ↗</a>'+
+      '<p class="rail-context">列車資料：2026年10月時刻表；不代表已購票、座位保證或當日即時行駛狀態。</p>';
+  }
+}
+
 async function loadItinerary(){
   try {
     // Cache bypass keeps schedule edits visible without rebuilding CSS/JS.
@@ -96,6 +116,8 @@ async function loadItinerary(){
     shopping=payload.shopping||{};
     teaNotes=payload.teaNotes||[];
     routeNotes=payload.routeNotes||{};
+    railSchedules=payload.railSchedules||[];
+    paintRailSchedules();
     paintFlights();
     paintNotes();
     setupChecklist();
