@@ -36,12 +36,13 @@ function draw(){const d=days[current];$('#dateRail').innerHTML=days.map((e,i)=>'
 $('#dateRail').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{current=Number(b.dataset.day);draw();}));
 $('#dayTitle').innerHTML='<div class="day-icon">'+esc(d.emoji)+'</div><div><span>DAY '+(current+1)+' / 4 · '+esc(d.date)+'</span><h3>'+esc(d.title)+'</h3><p>慢慢走，把美好的風景收進心裡 ♡</p></div>';
 $('#stops').innerHTML=d.stops.map((s,i)=>{const [time,name,len]=s;const [em,tag,bg]=category(name);const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);return '<article class="stop" style="--index:'+i+'"><span class="stop-time">'+esc(time)+'</span><span class="stop-dot"></span><div class="stop-card '+(spots[name]?'warning':'')+'"><div class="stop-name">'+em+' '+esc(name)+'</div><div class="stop-metas"><span class="chip" style="background:'+bg+'">'+tag+'</span><span class="stop-length">⏱ '+duration(len)+'</span><a class="maplink" href="'+map+'" target="_blank" rel="noopener noreferrer">地圖 ↗</a></div>'+(spots[name]?'<div class="warning-text">⚠ '+esc(spots[name])+'</div>':'')+(routeNotes[name]?'<div class="route-extra">🛍️ '+esc(routeNotes[name])+'</div>':'')+(reservations.some(r=>r.date===d.date&&r.place===name)?'<div class="reservation-pill">🍋 已訂位 · '+esc(reservations.find(r=>r.date===d.date&&r.place===name).time)+'</div>':'')+'</div></article>'}).join('');
-$('#dayHint').textContent=hints[current];renderWalkingRoute(d);}
-const tabs=['trip','flight','prep','notes'];
-function showTab(t){tabs.forEach(x=>{$('#view-'+x).classList.toggle('hidden',x!==t);document.querySelector('[data-tab='+x+']').setAttribute('aria-selected',String(x===t));});}
-document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
-let saved={};try{saved=JSON.parse(localStorage.getItem('bearcow-v3-checks')||'{}')}catch(e){}
-function refreshProgress(){const total=Object.values(packing).reduce((a,b)=>a+b.length,0);const n=Object.values(saved).filter(Boolean).length;$('#progressPercent').textContent=Math.round(n*100/total)+'%';$('#progressBar').style.width=(n/total*100)+'%';}
+$('#dayHint').textContent=hints[current];renderWalkingRoute(d);document.dispatchEvent(new Event('itineraryrender'));}
+const tabs=['trip','flight','route','prep','notes'];
+tabs.forEach(t=>{const button=document.querySelector('[data-tab='+t+']');button.setAttribute('role','tab');button.id='tab-'+t;button.setAttribute('aria-controls','view-'+t);const panel=$('#view-'+t);panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby','tab-'+t);});
+function showTab(t){if(!tabs.includes(t))return;tabs.forEach(x=>{$('#view-'+x).classList.toggle('hidden',x!==t);document.querySelector('[data-tab='+x+']').setAttribute('aria-selected',String(x===t));document.querySelector('[data-tab='+x+']').tabIndex=x===t?0:-1;});}
+document.querySelectorAll('[data-tab]').forEach(b=>{b.tabIndex=b.dataset.tab==='trip'?0:-1;b.addEventListener('click',()=>showTab(b.dataset.tab));b.addEventListener('keydown',event=>{const order=Array.from(document.querySelectorAll('[data-tab]'));let i=order.indexOf(b);if(event.key==='ArrowRight')i=(i+1)%order.length;else if(event.key==='ArrowLeft')i=(i+order.length-1)%order.length;else if(event.key==='Home')i=0;else if(event.key==='End')i=order.length-1;else return;event.preventDefault();showTab(order[i].dataset.tab);order[i].focus();});});
+let saved={};try{const value=JSON.parse(localStorage.getItem('bearcow-v3-checks')||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))saved=value;}catch(e){}
+function refreshProgress(){const entries=Object.values(packing);const total=entries.reduce((a,b)=>a+b.length,0);const n=entries.reduce((count,items,i)=>count+items.filter((_,j)=>saved[i+'-'+j]===true).length,0);const percent=total?Math.round(n*100/total):0;$('#progressPercent').textContent=percent+'%';$('#progressBar').style.width=percent+'%';}
 function setupChecklist(){
 $('#checkList').innerHTML=Object.entries(packing).map(([name,arr],i)=>'<div class="checks paper"><h3>'+name+'</h3>'+arr.map((label,j)=>'<label class="checkitem"><input type="checkbox" data-check="'+i+'-'+j+'" '+(saved[i+'-'+j]?'checked':'')+'><span>'+esc(label)+'</span></label>').join('')+'</div>').join('');
 document.querySelectorAll('[data-check]').forEach(ch=>ch.addEventListener('change',()=>{saved[ch.dataset.check]=ch.checked;try{localStorage.setItem('bearcow-v3-checks',JSON.stringify(saved))}catch(e){}refreshProgress();}));
@@ -51,8 +52,8 @@ const motionButton=$('#motionSwitch');const motionLabel=$('#motionStatus');let p
 let animEnabled=!preferredReduced;
 try{const val=localStorage.getItem('bearcow-v3-motion');if(val!==null)animEnabled=val==='on'}catch(e){}
 function refreshMotion(){document.body.classList.toggle('motion-on',animEnabled);motionButton.setAttribute('aria-pressed',String(animEnabled));motionButton.textContent=animEnabled?'✨ 關閉動畫':'✨ 開啟動畫';motionLabel.textContent=animEnabled?'動畫正在播放｜小熊揮手、企鵝探頭揮翅、火車晃動':'動畫目前關閉'+(preferredReduced?'（偵測到系統減少動態效果）':'')+'｜按右側開啟';}
-motionButton.addEventListener('click',()=>{animEnabled=!animEnabled;try{localStorage.setItem('bearcow-v3-motion',animEnabled?'on':'off')}catch(e){}refreshMotion();draw();});
-const today=Date.now();const start=Date.parse('2026-10-30T06:55:00+08:00');if(today<start)$('#dayCount').textContent=Math.ceil((start-today)/86400000)+' 天';
+motionButton.addEventListener('click',()=>{animEnabled=!animEnabled;try{localStorage.setItem('bearcow-v3-motion',animEnabled?'on':'off')}catch(e){}refreshMotion();if(days.length)draw();});
+const today=Date.now();const start=Date.parse('2026-10-30T06:55:00+08:00');if(today<start){$('#dayCount').textContent=Math.ceil((start-today)/86400000)+' 天';$('#journeyStatus').textContent='出發倒數';}
 refreshMotion();
 
 function paintFlights(){
@@ -130,3 +131,4 @@ async function loadItinerary(){
   }
 }
 loadItinerary();
+
