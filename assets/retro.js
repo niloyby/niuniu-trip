@@ -14,6 +14,7 @@ let onlyFavorites = false;
 let routeSelection = 0;
 let routeDay = -1;
 let helloCount = 0;
+let helloResetTimer;
 
 function notifyTravel(message) {
   const target = $('#toast');
@@ -202,22 +203,23 @@ passportDialog.addEventListener('click', event => {
 });
 $('#greetMascots').addEventListener('click', () => {
   helloCount++;
-  const greetings = ['小熊：車票帶好了嗎？我們出發囉！', '企鵝：揮揮小翅膀，今天也要一起玩 ♡', '粉色列車已到站，請帶著好心情上車！', '隱藏彩蛋：少冰的焙茶拿鐵，準備好了 🍵'];
+  const greetings = ['01 號隊員：生77點名！1、2、3、4、5，全員到齊！', '02 號隊員：導航準備好了，五個人一起出發！', '03 號隊員：下一站美食，我們五個都要吃飽！', '04 號隊員：海邊集合，五個人的回憶一起收！', '05 號隊員：生77小隊，五個人一個都不能少！'];
   notifyTravel(greetings[(helloCount - 1) % greetings.length]);
   if (!animEnabled) return;
   const scene = $('#greetMascots');
+  clearTimeout(helloResetTimer);
   scene.classList.add('hello');
   for (let i = 0; i < 5; i++) {
     const heart = document.createElement('span');
     heart.className = 'hello-heart';
-    heart.textContent = i % 2 ? '✧' : '♡';
-    heart.style.setProperty('--x', (25 + i * 12) + '%');
+    heart.textContent = ['①', '②', '③', '④', '⑤'][i];
+    heart.style.setProperty('--x', (20 + i * 15) + '%');
     heart.style.animationDelay = (i * 0.05) + 's';
     heart.setAttribute('aria-hidden', 'true');
     scene.append(heart);
     setTimeout(() => heart.remove(), 1600);
   }
-  setTimeout(() => scene.classList.remove('hello'), 1600);
+  helloResetTimer = setTimeout(() => scene.classList.remove('hello'), 1600);
 });
 $('#backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: animEnabled ? 'smooth' : 'instant' }));
 if (days.length) enhanceTravelStops();

@@ -1,5 +1,5 @@
 {
-  "title": "沖繩小分隊",
+  "title": "生77小隊",
   "timezone": "Asia/Tokyo",
   "startAt": "2026-11-19T19:30:00+09:00",
   "days": [
@@ -334,7 +334,7 @@
       "好走的鞋和外套",
       "雨具和常備用品"
     ],
-    "🌴 小分隊出發前": [
+    "🌴 生77小隊出發前": [
       "餐廳預約與營業時間核對",
       "確認 OTS 取車與還車安排",
       "確認名護住宿與回程航班",
@@ -346,5 +346,6 @@
   "shopping": {},
   "teaNotes": [],
   "routeNotes": {},
-  "railSchedules": []
+  "railSchedules": [],
+  "partySize": 5
 }

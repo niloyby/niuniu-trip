@@ -34,3 +34,23 @@ html[data-theme=night] .stamp-slot{opacity:1}
 .search-box input::placeholder{color:var(--muted);opacity:1}
 
 .stop-time{white-space:normal;line-height:1.5}
+
+/* S77: five travelers, one Okinawa road trip. */
+.squad-mark{display:inline-grid;place-items:center;width:27px;height:27px;border:1.5px solid var(--ink);background:var(--yellow);font:900 14px ui-monospace,monospace;box-shadow:2px 2px 0 var(--ink);margin-right:7px;transform:rotate(-7deg)}
+.hero .squad-scene{height:190px;max-width:560px;width:100%}
+.hero .squad-scene svg{height:164px;width:100%}
+.squad-rollcall{display:flex;align-items:center;justify-content:center;gap:9px;padding:9px 0 16px;font:11px ui-monospace,monospace;color:var(--ink)}
+.rollcall-label{font-family:inherit;font-weight:700}
+.crew-dot{display:inline-grid;place-items:center;width:24px;height:24px;border:1.5px solid var(--ink);border-radius:50%;background:var(--crew-color);color:#343b3b;font-size:9px;font-weight:800;box-shadow:1px 2px 0 var(--ink)}
+.squad-rollcall strong{font-size:11px;margin-left:2px}
+.footer-squad{display:inline-block;border:1px solid var(--line);padding:5px 12px;margin-bottom:7px;font:800 10px ui-monospace,monospace;letter-spacing:2px;color:var(--ink)}
+body.motion-on .squad-van{animation:squadDrive 1.7s ease-in-out infinite;transform-origin:center}
+body.motion-on .member-bob{animation:memberRide 1.8s ease-in-out infinite;animation-delay:var(--member-delay)}
+body.motion-on .member-wave{animation:squadWave 1.3s ease-in-out infinite;animation-delay:var(--member-delay);transform-box:fill-box;transform-origin:center bottom}
+body.motion-on .scene.hello .member-wave{animation-duration:.38s}
+@keyframes squadDrive{0%,100%{transform:translateY(0) rotate(-.35deg)}50%{transform:translateY(-3px) rotate(.35deg)}}
+@keyframes memberRide{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes squadWave{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(16deg)}}
+html[data-theme=night] .crew-dot{border-color:#e1e5d8;box-shadow:1px 2px 0 #101e21}
+@media(max-width:760px){.hero .squad-scene{height:165px}.hero .squad-scene svg{height:137px}.squad-rollcall{gap:6px;font-size:10px}.crew-dot{width:21px;height:21px}.squad-rollcall strong{font-size:10px}}
+@media(max-width:520px){.hero .squad-scene{height:166px}.hero .squad-scene svg{height:140px}.squad-rollcall{padding-bottom:14px}.hero .hero-kicker{font-size:12px}.hero-sticker{font-size:7px}.squad-rollcall{gap:7px}}

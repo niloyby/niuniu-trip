@@ -52,7 +52,7 @@ function renderWalkingRoute(day){
 
 function draw(){const d=days[current];$('#dateRail').innerHTML=days.map((e,i)=>'<button type="button" class="day-button '+(i===current?'selected':'')+'" data-day="'+i+'" aria-pressed="'+(i===current)+'"><small>DAY '+(i+1)+'</small><strong>'+e.date.slice(5).replace('-','/')+'</strong><span class="dow">週'+e.dow+'</span></button>').join('');
 $('#dateRail').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{current=Number(b.dataset.day);draw();}));
-$('#dayTitle').innerHTML='<div class="day-icon">'+esc(d.emoji)+'</div><div><span>DAY '+(current+1)+' / '+days.length+' · '+esc(d.date)+'</span><h3>'+esc(d.title)+'</h3><p>慢慢走，把美好的風景收進心裡 ♡</p></div>';
+$('#dayTitle').innerHTML='<div class="day-icon">'+esc(d.emoji)+'</div><div><span>DAY '+(current+1)+' / '+days.length+' · '+esc(d.date)+'</span><h3>'+esc(d.title)+'</h3><p>生77小隊・五個人的沖繩回憶 ✦</p></div>';
 $('#stops').innerHTML=d.stops.map((s,i)=>{const [time,name,len]=s;const [em,tag,bg]=category(name);const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);return '<article class="stop" style="--index:'+i+'"><span class="stop-time">'+esc(stopTime(d,i))+'</span><span class="stop-dot"></span><div class="stop-card '+(spots[name]?'warning':'')+'"><div class="stop-name">'+em+' '+esc(name)+'</div><div class="stop-metas"><span class="chip" style="background:'+bg+'">'+tag+'</span><span class="stop-length">⏱ '+duration(len)+'</span><a class="maplink" href="'+map+'" target="_blank" rel="noopener noreferrer">地圖 ↗</a></div>'+(spots[name]?'<div class="warning-text">⚠ '+esc(spots[name])+'</div>':'')+(routeNotes[name]?'<div class="route-extra">🛍️ '+esc(routeNotes[name])+'</div>':'')+(reservations.some(r=>r.date===d.date&&r.place===name)?'<div class="reservation-pill">🍋 已訂位 · '+esc(reservations.find(r=>r.date===d.date&&r.place===name).time)+'</div>':'')+'</div></article>'}).join('');
 $('#dayHint').textContent=hints[current];renderWalkingRoute(d);document.dispatchEvent(new Event('itineraryrender'));}
 const tabs=['trip','flight','route','prep','notes'];
@@ -69,7 +69,7 @@ const motionButton=$('#motionSwitch');const motionLabel=$('#motionStatus');let p
 // Preserve accessibility without silently making the page seem broken: announce state and show a visible override.
 let animEnabled=!preferredReduced;
 try{const val=localStorage.getItem('bearcow-v3-motion');if(val!==null)animEnabled=val==='on'}catch(e){}
-function refreshMotion(){document.body.classList.toggle('motion-on',animEnabled);motionButton.setAttribute('aria-pressed',String(animEnabled));motionButton.textContent=animEnabled?'✨ 關閉動畫':'✨ 開啟動畫';motionLabel.textContent=animEnabled?'動畫正在播放｜小熊揮手、企鵝探頭揮翅、火車晃動':'動畫目前關閉'+(preferredReduced?'（偵測到系統減少動態效果）':'')+'｜按右側開啟';}
+function refreshMotion(){document.body.classList.toggle('motion-on',animEnabled);motionButton.setAttribute('aria-pressed',String(animEnabled));motionButton.textContent=animEnabled?'✨ 關閉動畫':'✨ 開啟動畫';motionLabel.textContent=animEnabled?'動畫正在播放｜五人揮手、沖繩小巴出發':'動畫目前關閉'+(preferredReduced?'（偵測到系統減少動態效果）':'')+'｜按右側開啟';}
 motionButton.addEventListener('click',()=>{animEnabled=!animEnabled;try{localStorage.setItem('bearcow-v3-motion',animEnabled?'on':'off')}catch(e){}refreshMotion();if(days.length)draw();});
 refreshMotion();
 
