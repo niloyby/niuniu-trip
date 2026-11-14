@@ -46,7 +46,7 @@ function updateTravelPassport() {
     return '<div class="album-day"><div class="stamp-slot ' + (count ? 'collected' : '') + '" aria-hidden="true">' + (count ? day.emoji : '✧') + '<span>DAY ' + (di + 1) + '</span></div><div><h3>' + esc(day.title) + '</h3><p>' + esc(day.date) + ' · 已蓋 ' + count + ' / ' + day.stops.length + ' 站</p></div></div>';
   }).join('');
   const savedStops = all.filter(s => travelMemory.favorites[s.key] === true);
-  $('#favoriteNotes').innerHTML = savedStops.length ? savedStops.map(s => '<div class="favorite-note"><span><small>DAY ' + (s.di + 1) + ' · ' + esc(s.stop[0]) + '</small><br>' + esc(s.stop[1]) + '</span><button type="button" data-jump-day="' + s.di + '" data-jump-stop="' + s.index + '">查看行程 ↗</button></div>').join('') : '<p>還沒有口袋景點。到「行程」按下 ♡ 收藏，把想去的地方收進來。</p>';
+  $('#favoriteNotes').innerHTML = savedStops.length ? savedStops.map(s => '<div class="favorite-note"><span><small>DAY ' + (s.di + 1) + ' · ' + esc(stopTime(s.day,s.index)) + '</small><br>' + esc(s.stop[1]) + '</span><button type="button" data-jump-day="' + s.di + '" data-jump-stop="' + s.index + '">查看行程 ↗</button></div>').join('') : '<p>還沒有口袋景點。到「行程」按下 ♡ 收藏，把想去的地方收進來。</p>';
 }
 function filterTravelStops() {
   if (!days.length) return;
@@ -106,7 +106,7 @@ function drawTravelRoute() {
     const row = Math.floor(i / cols);
     const col = row % 2 ? cols - i % cols : i % cols + 1;
     const direction = (i + 1) % cols === 0 ? '↓' : row % 2 ? '←' : '→';
-    return '<button type="button" class="route-node" style="grid-row:' + (row + 1) + ';grid-column:' + col + '" data-route-stop="' + i + '" aria-pressed="' + (routeSelection === i) + '"><span class="route-number">' + (i + 1) + '</span><small>' + esc(stop[0]) + ' · ' + esc(category(stop[1])[1]) + '</small><strong>' + esc(stop[1]) + '</strong>' + (i < day.stops.length - 1 ? '<span class="route-connector" data-direction="' + direction + '" aria-hidden="true">' + direction + '</span>' : '') + '</button>';
+    return '<button type="button" class="route-node" style="grid-row:' + (row + 1) + ';grid-column:' + col + '" data-route-stop="' + i + '" aria-pressed="' + (routeSelection === i) + '"><span class="route-number">' + (i + 1) + '</span><small>' + esc(stopTime(day,i)) + ' · ' + esc(category(stop[1])[1]) + '</small><strong>' + esc(stop[1]) + '</strong>' + (i < day.stops.length - 1 ? '<span class="route-connector" data-direction="' + direction + '" aria-hidden="true">' + direction + '</span>' : '') + '</button>';
   }).join('');
   updateRouteDetail();
 }
@@ -120,7 +120,7 @@ function updateRouteDetail() {
     const params = new URLSearchParams({ api: '1', origin: day.stops[routeSelection - 1][1], destination: name });
     previousLink = '<a href="https://www.google.com/maps/dir/?' + esc(params.toString()) + '" target="_blank" rel="noopener noreferrer">從上一站規劃交通 ↗</a>';
   }
-  $('#routeDetail').innerHTML = '<small>STOP ' + (routeSelection + 1) + ' / ' + day.stops.length + '</small><h4>' + esc(name) + '</h4><p>' + esc(time) + ' · ' + esc(duration(len)) + '</p>' + (routeNotes[name] ? '<p>' + esc(routeNotes[name]) + '</p>' : '') + (spots[name] ? '<p>⚠ ' + esc(spots[name]) + '</p>' : '') + '<div class="route-detail-links"><button type="button" class="retro-button" data-jump-day="' + current + '" data-jump-stop="' + routeSelection + '">查看行程卡 ↗</button><a href="' + esc(map) + '" target="_blank" rel="noopener noreferrer">Google Maps ↗</a>' + previousLink + '</div>';
+  $('#routeDetail').innerHTML = '<small>STOP ' + (routeSelection + 1) + ' / ' + day.stops.length + '</small><h4>' + esc(name) + '</h4><p>' + esc(stopTime(day,routeSelection)) + ' · ' + esc(duration(len)) + '</p>' + (routeNotes[name] ? '<p>' + esc(routeNotes[name]) + '</p>' : '') + (spots[name] ? '<p>⚠ ' + esc(spots[name]) + '</p>' : '') + '<div class="route-detail-links"><button type="button" class="retro-button" data-jump-day="' + current + '" data-jump-stop="' + routeSelection + '">查看行程卡 ↗</button><a href="' + esc(map) + '" target="_blank" rel="noopener noreferrer">Google Maps ↗</a>' + previousLink + '</div>';
   $('#routeBoard').querySelectorAll('[data-route-stop]').forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.routeStop) === routeSelection)));
 }
 

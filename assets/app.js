@@ -12,8 +12,26 @@ let routeNotes={};
 let railSchedules=[];
 
 let current=0;
-function category(name){if(/機場/.test(name))return ['✈️','機場','#e7e0f4'];if(/酒店|飯店/.test(name))return ['🏡','住宿','#f8d9d3'];if(/站$/.test(name))return ['🚉','交通','#dbecd6'];if(/肉|鰻|檸檬|Pomme|焼肉/.test(name))return ['🍡','美食','#f9e0b4'];if(/店|PARCO|伊勢丹|大丸|Mall|商店街|任天堂|BEAMS/.test(name))return ['🛍️','購物','#e8e1f8'];return ['⛩️','景點','#dbeefa'];}
-function duration(d){const [h,m]=d.split(':').map(Number);return h===0&&m===0?'轉乘或經過':(h?h+' 小時 ':'')+(m?m+' 分鐘':'');}
+function category(name){
+  if(/OTS|休息站/.test(name))return ['🚗','交通','#dbecd6'];
+  if(/機場|空港/.test(name))return ['✈️','機場','#e7e0f4'];
+  if(/酒店|飯店|生活公寓/.test(name))return ['🏡','住宿','#f8d9d3'];
+  if(/唐吉訶德|PARCO|COSTCO|好市多|GU |UNIQLO|mont-bell|迪斐世|3COINS|Cocoroar|FLAVOR DESIGN/.test(name))return ['🛍️','購物','#e8e1f8'];
+  if(/Chaboo|Isshin|Sweets|Torikawahakata|Kitchen|魚市場|燒肉|hoppepan|Coffee|星巴克|ダイニング|拉麵|蝦蝦飯|Burgers|豬排|Sushi|抹茶|鬆餅/.test(name))return ['🍡','美食','#f9e0b4'];
+  return ['🌴','景點','#dbeefa'];
+}
+function stopTime(day,index){
+  let offset=0;
+  for(let i=1;i<=index;i++)if(day.stops[i][0]<day.stops[i-1][0])offset++;
+  return (offset===1?'隔日 ':offset>1?'第 '+(offset+1)+' 日 ':'')+day.stops[index][0];
+}
+function paintJourney(){
+  const now=Date.now(),start=Date.parse(days[0].date+'T00:00:00+09:00');
+  const end=Date.parse(days[days.length-1].date+'T00:00:00+09:00')+86400000;
+  $('#dayCount').textContent=days.length+' 天 '+(days.length-1)+' 夜';
+  $('#journeyStatus').textContent=now<start?'還有 '+Math.ceil((start-now)/86400000)+' 天出發':now<end?'旅行進行中':'旅行日記';
+}
+function duration(d){const [h,m]=d.split(':').map(Number);return h===0&&m===0?'不安排停留':(h?h+' 小時 ':'')+(m?m+' 分鐘':'');}
 
 function googleWalkingLink(segment){
   const q={api:'1',origin:segment.origin,destination:segment.destination,travelmode:'walking'};
@@ -34,18 +52,18 @@ function renderWalkingRoute(day){
 
 function draw(){const d=days[current];$('#dateRail').innerHTML=days.map((e,i)=>'<button type="button" class="day-button '+(i===current?'selected':'')+'" data-day="'+i+'" aria-pressed="'+(i===current)+'"><small>DAY '+(i+1)+'</small><strong>'+e.date.slice(5).replace('-','/')+'</strong><span class="dow">週'+e.dow+'</span></button>').join('');
 $('#dateRail').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{current=Number(b.dataset.day);draw();}));
-$('#dayTitle').innerHTML='<div class="day-icon">'+esc(d.emoji)+'</div><div><span>DAY '+(current+1)+' / 4 · '+esc(d.date)+'</span><h3>'+esc(d.title)+'</h3><p>慢慢走，把美好的風景收進心裡 ♡</p></div>';
-$('#stops').innerHTML=d.stops.map((s,i)=>{const [time,name,len]=s;const [em,tag,bg]=category(name);const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);return '<article class="stop" style="--index:'+i+'"><span class="stop-time">'+esc(time)+'</span><span class="stop-dot"></span><div class="stop-card '+(spots[name]?'warning':'')+'"><div class="stop-name">'+em+' '+esc(name)+'</div><div class="stop-metas"><span class="chip" style="background:'+bg+'">'+tag+'</span><span class="stop-length">⏱ '+duration(len)+'</span><a class="maplink" href="'+map+'" target="_blank" rel="noopener noreferrer">地圖 ↗</a></div>'+(spots[name]?'<div class="warning-text">⚠ '+esc(spots[name])+'</div>':'')+(routeNotes[name]?'<div class="route-extra">🛍️ '+esc(routeNotes[name])+'</div>':'')+(reservations.some(r=>r.date===d.date&&r.place===name)?'<div class="reservation-pill">🍋 已訂位 · '+esc(reservations.find(r=>r.date===d.date&&r.place===name).time)+'</div>':'')+'</div></article>'}).join('');
+$('#dayTitle').innerHTML='<div class="day-icon">'+esc(d.emoji)+'</div><div><span>DAY '+(current+1)+' / '+days.length+' · '+esc(d.date)+'</span><h3>'+esc(d.title)+'</h3><p>慢慢走，把美好的風景收進心裡 ♡</p></div>';
+$('#stops').innerHTML=d.stops.map((s,i)=>{const [time,name,len]=s;const [em,tag,bg]=category(name);const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);return '<article class="stop" style="--index:'+i+'"><span class="stop-time">'+esc(stopTime(d,i))+'</span><span class="stop-dot"></span><div class="stop-card '+(spots[name]?'warning':'')+'"><div class="stop-name">'+em+' '+esc(name)+'</div><div class="stop-metas"><span class="chip" style="background:'+bg+'">'+tag+'</span><span class="stop-length">⏱ '+duration(len)+'</span><a class="maplink" href="'+map+'" target="_blank" rel="noopener noreferrer">地圖 ↗</a></div>'+(spots[name]?'<div class="warning-text">⚠ '+esc(spots[name])+'</div>':'')+(routeNotes[name]?'<div class="route-extra">🛍️ '+esc(routeNotes[name])+'</div>':'')+(reservations.some(r=>r.date===d.date&&r.place===name)?'<div class="reservation-pill">🍋 已訂位 · '+esc(reservations.find(r=>r.date===d.date&&r.place===name).time)+'</div>':'')+'</div></article>'}).join('');
 $('#dayHint').textContent=hints[current];renderWalkingRoute(d);document.dispatchEvent(new Event('itineraryrender'));}
 const tabs=['trip','flight','route','prep','notes'];
 tabs.forEach(t=>{const button=document.querySelector('[data-tab='+t+']');button.setAttribute('role','tab');button.id='tab-'+t;button.setAttribute('aria-controls','view-'+t);const panel=$('#view-'+t);panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby','tab-'+t);});
 function showTab(t){if(!tabs.includes(t))return;tabs.forEach(x=>{$('#view-'+x).classList.toggle('hidden',x!==t);document.querySelector('[data-tab='+x+']').setAttribute('aria-selected',String(x===t));document.querySelector('[data-tab='+x+']').tabIndex=x===t?0:-1;});}
 document.querySelectorAll('[data-tab]').forEach(b=>{b.tabIndex=b.dataset.tab==='trip'?0:-1;b.addEventListener('click',()=>showTab(b.dataset.tab));b.addEventListener('keydown',event=>{const order=Array.from(document.querySelectorAll('[data-tab]'));let i=order.indexOf(b);if(event.key==='ArrowRight')i=(i+1)%order.length;else if(event.key==='ArrowLeft')i=(i+order.length-1)%order.length;else if(event.key==='Home')i=0;else if(event.key==='End')i=order.length-1;else return;event.preventDefault();showTab(order[i].dataset.tab);order[i].focus();});});
-let saved={};try{const value=JSON.parse(localStorage.getItem('bearcow-v3-checks')||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))saved=value;}catch(e){}
+let saved={};try{const value=JSON.parse(localStorage.getItem('okinawa-squad-20261119-checks')||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))saved=value;}catch(e){}
 function refreshProgress(){const entries=Object.values(packing);const total=entries.reduce((a,b)=>a+b.length,0);const n=entries.reduce((count,items,i)=>count+items.filter((_,j)=>saved[i+'-'+j]===true).length,0);const percent=total?Math.round(n*100/total):0;$('#progressPercent').textContent=percent+'%';$('#progressBar').style.width=percent+'%';}
 function setupChecklist(){
 $('#checkList').innerHTML=Object.entries(packing).map(([name,arr],i)=>'<div class="checks paper"><h3>'+name+'</h3>'+arr.map((label,j)=>'<label class="checkitem"><input type="checkbox" data-check="'+i+'-'+j+'" '+(saved[i+'-'+j]?'checked':'')+'><span>'+esc(label)+'</span></label>').join('')+'</div>').join('');
-document.querySelectorAll('[data-check]').forEach(ch=>ch.addEventListener('change',()=>{saved[ch.dataset.check]=ch.checked;try{localStorage.setItem('bearcow-v3-checks',JSON.stringify(saved))}catch(e){}refreshProgress();}));
+document.querySelectorAll('[data-check]').forEach(ch=>ch.addEventListener('change',()=>{saved[ch.dataset.check]=ch.checked;try{localStorage.setItem('okinawa-squad-20261119-checks',JSON.stringify(saved))}catch(e){}refreshProgress();}));
 }
 const motionButton=$('#motionSwitch');const motionLabel=$('#motionStatus');let preferredReduced=false;try{preferredReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
 // Preserve accessibility without silently making the page seem broken: announce state and show a visible override.
@@ -53,60 +71,19 @@ let animEnabled=!preferredReduced;
 try{const val=localStorage.getItem('bearcow-v3-motion');if(val!==null)animEnabled=val==='on'}catch(e){}
 function refreshMotion(){document.body.classList.toggle('motion-on',animEnabled);motionButton.setAttribute('aria-pressed',String(animEnabled));motionButton.textContent=animEnabled?'✨ 關閉動畫':'✨ 開啟動畫';motionLabel.textContent=animEnabled?'動畫正在播放｜小熊揮手、企鵝探頭揮翅、火車晃動':'動畫目前關閉'+(preferredReduced?'（偵測到系統減少動態效果）':'')+'｜按右側開啟';}
 motionButton.addEventListener('click',()=>{animEnabled=!animEnabled;try{localStorage.setItem('bearcow-v3-motion',animEnabled?'on':'off')}catch(e){}refreshMotion();if(days.length)draw();});
-const today=Date.now();const start=Date.parse('2026-10-30T06:55:00+08:00');if(today<start){$('#dayCount').textContent=Math.ceil((start-today)/86400000)+' 天';$('#journeyStatus').textContent='出發倒數';}
 refreshMotion();
 
-function paintFlights(){
-  if(!flights.length)return;
-  const [outbound,inbound]=flights;
-  const makeLine=(f,from,to)=>esc(f.number)+' · '+esc(f.departure)+' '+from+' → '+esc(f.arrival)+' '+to;
-  $('#outboundFlight').textContent=outbound.number+' · '+outbound.departure+' 高雄 → '+outbound.arrival+' 關西國際機場';
-  $('#returnFlight').textContent=inbound.number+' · '+inbound.departure+' 中部國際機場 → '+inbound.arrival+' 高雄';
-  $('#outboundLuggage').textContent='✈️ '+outbound.airline+' · '+outbound.checkedBagNotes;
-  $('#returnLuggage').textContent='✈️ '+inbound.airline+' · '+inbound.checkedBagNotes;
-  const flightTime=Number(inbound.departure.slice(0,2))*60+Number(inbound.departure.slice(3));
-  const airportTime=17*60+22;
-  const diff=flightTime-airportTime;
-  $('#flightArrivalTip').textContent='原訂 17:22 到 NGO，距 '+inbound.number+' '+inbound.departure+' 起飛約 '+Math.floor(diff/60)+' 小時 '+diff%60+' 分；請留意行李託運截止時間。';
-}
 function noteLink(href,label){
   if(!href)return '';
   return '<a href="'+esc(href)+'" target="_blank" rel="noopener noreferrer">'+esc(label)+' ↗</a>';
 }
-function paintNotes(){
-  const cities=[{key:'kyoto',title:'🍁 京都限定優先',desc:'10/30–10/31｜四條河原町與京都站附近'},
-                {key:'nagoya',title:'🚅 名古屋限定優先',desc:'11/1–11/2｜榮商圈與名古屋站'}];
-  $('#shoppingNotes').innerHTML=cities.map(city=>'<section class="note-group"><h3>'+city.title+'</h3><p class="note-detail">'+city.desc+'</p>'+
-    (shopping[city.key]||[]).map(n=>'<article class="paper note-item"><div class="note-top"><span class="note-title">'+esc(n.name)+'</span><span class="note-priority">'+esc(n.priority)+'</span></div><p class="note-detail">'+esc(n.place)+' · '+esc(n.area)+'</p><p>'+esc(n.description)+'</p><div class="note-links">'+noteLink('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(n.mapQuery),'地圖')+noteLink(n.url,'店家資訊')+'</div></article>').join('')+'</section>').join('');
-  $('#teaNotes').innerHTML=teaNotes.map(n=>'<article class="paper note-item"><div class="note-top"><span class="note-title">🍵 '+esc(n.name)+'</span><span class="note-priority">'+esc(n.hours)+'</span></div><p class="note-detail">'+esc(n.location)+'</p><p>📍 '+esc(n.route)+'</p><p>'+esc(n.description)+'</p><div class="note-links">'+noteLink('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(n.mapQuery),'地圖')+noteLink(n.url,'官方資訊')+'</div></article>').join('');
-}
-
-
-function paintRailSchedules(){
-  for(const route of railSchedules){
-    const target=$('#'+route.key+'Choices');
-    if(!target)continue;
-    target.innerHTML=
-      '<p class="rail-context">'+esc(route.arrivalContext)+'｜'+esc(route.purpose)+'</p>'+
-      route.options.map(opt=>{
-        const main=opt.id===route.recommendation;
-        return '<div class="rail-option '+(main?'recommended':'')+'"><div class="rail-train">'+esc(opt.name)+(main?' <span class="rail-choice-tag">推薦</span>':'')+'</div>'+
-          '<div class="rail-time">'+esc(opt.depart)+' → '+esc(opt.arrive)+'</div>'+
-          '<div class="rail-note">'+esc(opt.note)+'</div></div>';
-      }).join('')+
-      '<div class="rail-warning">⚠ '+esc(route.warning)+'</div>'+
-      '<a class="rail-link" href="'+esc(route.sourceUrl)+'" target="_blank" rel="noopener noreferrer">查看時刻表・出發前再核對 ↗</a>'+
-      '<p class="rail-context">列車資料：2026年10月時刻表；不代表已購票、座位保證或當日即時行駛狀態。</p>';
-  }
-}
-
 async function loadItinerary(){
   try {
     // Cache bypass keeps schedule edits visible without rebuilding CSS/JS.
     const response=await fetch('./data/itinerary.json?ts='+Date.now(),{cache:'no-store'});
     if(!response.ok)throw new Error('HTTP '+response.status);
     const payload=await response.json();
-    if(!Array.isArray(payload.days)||payload.days.length!==4||
+    if(!Array.isArray(payload.days)||payload.days.length===0||
        payload.days.some(d=>!Array.isArray(d.stops)||!d.date))throw new Error('行程資料格式不符');
     days=payload.days;
     spots=payload.spots||{};
@@ -118,9 +95,7 @@ async function loadItinerary(){
     teaNotes=payload.teaNotes||[];
     routeNotes=payload.routeNotes||{};
     railSchedules=payload.railSchedules||[];
-    paintRailSchedules();
-    paintFlights();
-    paintNotes();
+    paintJourney();
     setupChecklist();
     draw();
     refreshProgress();
