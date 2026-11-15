@@ -49,7 +49,16 @@
           "唐吉訶德 那霸壺川店",
           "01:00"
         ]
-      ]
+      ],
+      "party": "5 人同行",
+      "transport": "大眾交通",
+      "hotel": {
+        "name": "那霸生活公寓度假村-旭橋站前高級飯店及別館",
+        "checkIn": "2026-11-19",
+        "checkOut": "2026-11-21",
+        "nights": 2,
+        "query": "Living Inn Asahibashiekimae Premier"
+      }
     },
     {
       "date": "2026-11-20",
@@ -112,7 +121,16 @@
           "燒肉 琉球之牛 那霸國際通",
           "02:00"
         ]
-      ]
+      ],
+      "party": "5 人同行",
+      "transport": "租車自駕",
+      "hotel": {
+        "name": "那霸生活公寓度假村-旭橋站前高級飯店及別館",
+        "checkIn": "2026-11-19",
+        "checkOut": "2026-11-21",
+        "nights": 2,
+        "query": "Living Inn Asahibashiekimae Premier"
+      }
     },
     {
       "date": "2026-11-21",
@@ -180,7 +198,17 @@
           "MEGA 唐吉訶德 名護店",
           "01:00"
         ]
-      ]
+      ],
+      "party": "5 → 4 人｜11:41 機場送行後四人繼續",
+      "transport": "租車自駕",
+      "hotel": {
+        "name": "華茶 KACHA",
+        "address": "沖縄県名護市宮里3-6-21",
+        "checkIn": "2026-11-21",
+        "checkOut": "2026-11-22",
+        "nights": 1,
+        "query": "華茶 名護市宮里3-6-21"
+      }
     },
     {
       "date": "2026-11-22",
@@ -233,12 +261,21 @@
           "Chokotto Sushi Kokusai-dori Yataimura",
           "01:00"
         ]
-      ]
+      ],
+      "party": "4 人同行",
+      "transport": "租車自駕",
+      "hotel": {
+        "name": "Yukureba 前島飯店",
+        "checkIn": "2026-11-22",
+        "checkOut": "2026-11-23",
+        "nights": 1,
+        "query": "Yukureba 前島飯店 沖繩"
+      }
     },
     {
       "date": "2026-11-23",
       "dow": "一",
-      "title": "那霸早午餐・機場・海洋博公園",
+      "title": "那霸早午餐・還車・四人返台",
       "emoji": "🌴",
       "stops": [
         [
@@ -267,59 +304,29 @@
           "00:30"
         ],
         [
-          "16:10",
-          "Sunset Square",
-          "01:00"
-        ],
-        [
-          "17:16",
-          "熱帶夢想中心",
-          "01:00"
-        ],
-        [
-          "18:24",
-          "Oceanic Culture Museum Planetarium",
-          "01:00"
-        ],
-        [
-          "19:26",
-          "Okinawa Village",
-          "01:00"
-        ],
-        [
-          "20:34",
-          "海豚劇場",
-          "01:00"
-        ],
-        [
-          "21:38",
-          "Kokuei Okinawakinenkoen Emerald Beach",
-          "01:00"
+          "16:45",
+          "那霸機場｜JX303 起飛",
+          "00:00"
         ]
-      ]
-    },
-    {
-      "date": "2026-11-24",
-      "dow": "二",
-      "title": "Beachy Okinawa",
-      "emoji": "🏖️",
-      "stops": [
-        [
-          "08:00",
-          "Beachy Okinawa",
-          "01:00"
-        ]
-      ]
+      ],
+      "party": "4 人返台",
+      "transport": "租車至 12:00 還車，再前往機場",
+      "hotel": {
+        "name": "Yukureba 前島飯店",
+        "checkIn": "2026-11-22",
+        "checkOut": "2026-11-23",
+        "nights": 1,
+        "query": "Yukureba 前島飯店 沖繩"
+      }
     }
   ],
   "spots": {},
   "hints": [
-    "本頁皆為日本當地時間。00:02 起為隔日 11/20 凌晨，仍歸在第 1 天；保留原始順序與停留時間。",
-    "OTS 取車、糸滿魚市場、玉泉洞與好市多後，回飯店再前往市區與 PARCO CITY。",
-    "由那霸經美國村前往名護；名護住宿資訊尚未提供。",
-    "美麗海水族館與古宇利後，依原行程南下來客夢與那霸，晚間抵達 Yukureba 前島飯店。",
-    "依原始清單保留：12:00 OTS、14:00 那覇空港，之後接續北部海洋博公園行程；此處機場用途與後續交通尚待確認。",
-    "目前提供 08:00 Beachy Okinawa，停留 1 小時。"
+    "11/19 搭大眾交通；入住旭橋飯店（11/19–11/21，兩晚）。00:02 起為 11/20 凌晨，保留在第 1 天。時間依原清單，實際入住時間請配合飯店規定。",
+    "09:00 於 OTS 臨空豐崎營業所取車，停留 30 分鐘；五人自駕，今晚續住旭橋飯店。餐廳時間依原清單，未標示為已訂位。",
+    "11:41 到那霸機場送一位隊員搭 IT289（14:00 那霸 → 14:55 高雄）；送行後四人繼續。今晚入住華茶 KACHA，名護市宮里3-6-21。",
+    "四人自駕，從名護前往美麗海水族館、古宇利，再南下那霸；今晚入住 Yukureba 前島飯店。",
+    "四人返台：12:00 OTS 還車（停留 1 小時），14:00 到那霸機場，16:45 搭 JX303 → 台中 17:35。航班起降各用當地時間；其餘行程時間為日本時間。原機場後景點已移至「備選」。"
   ],
   "packing": {
     "🎟️ 證件與預約": [
@@ -337,15 +344,105 @@
     "🌴 生77小隊出發前": [
       "餐廳預約與營業時間核對",
       "確認 OTS 取車與還車安排",
-      "確認名護住宿與回程航班",
+      "確認四晚住宿與兩組回程航班",
       "伴手禮清單"
     ]
   },
-  "flights": [],
+  "flights": [
+    {
+      "date": "2026-11-19",
+      "airline": "星宇航空",
+      "number": "JX312",
+      "from": "台中 RMQ",
+      "to": "那霸 OKA",
+      "departure": "17:00",
+      "arrival": "19:30",
+      "party": "5 人出發"
+    },
+    {
+      "date": "2026-11-21",
+      "airline": "台灣虎航",
+      "number": "IT289",
+      "from": "那霸 OKA",
+      "to": "高雄 KHH",
+      "departure": "14:00",
+      "arrival": "14:55",
+      "party": "1 人提前返台"
+    },
+    {
+      "date": "2026-11-23",
+      "airline": "星宇航空",
+      "number": "JX303",
+      "from": "那霸 OKA",
+      "to": "台中 RMQ",
+      "departure": "16:45",
+      "arrival": "17:35",
+      "party": "4 人返台"
+    }
+  ],
   "reservations": [],
   "shopping": {},
   "teaNotes": [],
   "routeNotes": {},
   "railSchedules": [],
-  "partySize": 5
+  "partySize": 5,
+  "backupStops": [
+    {
+      "name": "Sunset Square",
+      "duration": "01:00"
+    },
+    {
+      "name": "熱帶夢想中心",
+      "duration": "01:00"
+    },
+    {
+      "name": "Oceanic Culture Museum Planetarium",
+      "duration": "01:00"
+    },
+    {
+      "name": "Okinawa Village",
+      "duration": "01:00"
+    },
+    {
+      "name": "海豚劇場",
+      "duration": "01:00"
+    },
+    {
+      "name": "Kokuei Okinawakinenkoen Emerald Beach",
+      "duration": "01:00"
+    },
+    {
+      "name": "Beachy Okinawa",
+      "duration": "01:00"
+    }
+  ],
+  "hotels": [
+    {
+      "name": "那霸生活公寓度假村-旭橋站前高級飯店及別館",
+      "checkIn": "2026-11-19",
+      "checkOut": "2026-11-21",
+      "nights": 2,
+      "query": "Living Inn Asahibashiekimae Premier"
+    },
+    {
+      "name": "華茶 KACHA",
+      "address": "沖縄県名護市宮里3-6-21",
+      "checkIn": "2026-11-21",
+      "checkOut": "2026-11-22",
+      "nights": 1,
+      "query": "華茶 名護市宮里3-6-21"
+    },
+    {
+      "name": "Yukureba 前島飯店",
+      "checkIn": "2026-11-22",
+      "checkOut": "2026-11-23",
+      "nights": 1,
+      "query": "Yukureba 前島飯店 沖繩"
+    }
+  ],
+  "rental": {
+    "company": "OTS 臨空豐崎營業所（那霸機場）",
+    "pickup": "2026-11-20 09:00",
+    "dropoff": "2026-11-23 12:00"
+  }
 }

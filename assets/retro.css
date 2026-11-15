@@ -54,3 +54,7 @@ body.motion-on .scene.hello .member-wave{animation-duration:.38s}
 html[data-theme=night] .crew-dot{border-color:#e1e5d8;box-shadow:1px 2px 0 #101e21}
 @media(max-width:760px){.hero .squad-scene{height:165px}.hero .squad-scene svg{height:137px}.squad-rollcall{gap:6px;font-size:10px}.crew-dot{width:21px;height:21px}.squad-rollcall strong{font-size:10px}}
 @media(max-width:520px){.hero .squad-scene{height:166px}.hero .squad-scene svg{height:140px}.squad-rollcall{padding-bottom:14px}.hero .hero-kicker{font-size:12px}.hero-sticker{font-size:7px}.squad-rollcall{gap:7px}}
+
+/* Six tabs fit phone screens without reducing touch targets. */
+.site-nav nav{flex-wrap:wrap}
+@media(max-width:520px){.site-nav nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.site-nav .nav-btn{width:100%;min-height:40px}.mini strong{overflow-wrap:anywhere}}

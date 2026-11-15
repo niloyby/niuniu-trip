@@ -52,10 +52,10 @@ function renderWalkingRoute(day){
 
 function draw(){const d=days[current];$('#dateRail').innerHTML=days.map((e,i)=>'<button type="button" class="day-button '+(i===current?'selected':'')+'" data-day="'+i+'" aria-pressed="'+(i===current)+'"><small>DAY '+(i+1)+'</small><strong>'+e.date.slice(5).replace('-','/')+'</strong><span class="dow">週'+e.dow+'</span></button>').join('');
 $('#dateRail').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{current=Number(b.dataset.day);draw();}));
-$('#dayTitle').innerHTML='<div class="day-icon">'+esc(d.emoji)+'</div><div><span>DAY '+(current+1)+' / '+days.length+' · '+esc(d.date)+'</span><h3>'+esc(d.title)+'</h3><p>生77小隊・五個人的沖繩回憶 ✦</p></div>';
+$('#dayTitle').innerHTML='<div class="day-icon">'+esc(d.emoji)+'</div><div><span>DAY '+(current+1)+' / '+days.length+' · '+esc(d.date)+'</span><h3>'+esc(d.title)+'</h3><p>'+esc(d.party)+' · '+esc(d.transport)+'</p><p>'+esc(current===days.length-1?'今日退房：':'今晚住宿：')+esc(d.hotel.name)+'</p></div>';
 $('#stops').innerHTML=d.stops.map((s,i)=>{const [time,name,len]=s;const [em,tag,bg]=category(name);const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);return '<article class="stop" style="--index:'+i+'"><span class="stop-time">'+esc(stopTime(d,i))+'</span><span class="stop-dot"></span><div class="stop-card '+(spots[name]?'warning':'')+'"><div class="stop-name">'+em+' '+esc(name)+'</div><div class="stop-metas"><span class="chip" style="background:'+bg+'">'+tag+'</span><span class="stop-length">⏱ '+duration(len)+'</span><a class="maplink" href="'+map+'" target="_blank" rel="noopener noreferrer">地圖 ↗</a></div>'+(spots[name]?'<div class="warning-text">⚠ '+esc(spots[name])+'</div>':'')+(routeNotes[name]?'<div class="route-extra">🛍️ '+esc(routeNotes[name])+'</div>':'')+(reservations.some(r=>r.date===d.date&&r.place===name)?'<div class="reservation-pill">🍋 已訂位 · '+esc(reservations.find(r=>r.date===d.date&&r.place===name).time)+'</div>':'')+'</div></article>'}).join('');
 $('#dayHint').textContent=hints[current];renderWalkingRoute(d);document.dispatchEvent(new Event('itineraryrender'));}
-const tabs=['trip','flight','route','prep','notes'];
+const tabs=['trip','flight','route','prep','notes','backup'];
 tabs.forEach(t=>{const button=document.querySelector('[data-tab='+t+']');button.setAttribute('role','tab');button.id='tab-'+t;button.setAttribute('aria-controls','view-'+t);const panel=$('#view-'+t);panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby','tab-'+t);});
 function showTab(t){if(!tabs.includes(t))return;tabs.forEach(x=>{$('#view-'+x).classList.toggle('hidden',x!==t);document.querySelector('[data-tab='+x+']').setAttribute('aria-selected',String(x===t));document.querySelector('[data-tab='+x+']').tabIndex=x===t?0:-1;});}
 document.querySelectorAll('[data-tab]').forEach(b=>{b.tabIndex=b.dataset.tab==='trip'?0:-1;b.addEventListener('click',()=>showTab(b.dataset.tab));b.addEventListener('keydown',event=>{const order=Array.from(document.querySelectorAll('[data-tab]'));let i=order.indexOf(b);if(event.key==='ArrowRight')i=(i+1)%order.length;else if(event.key==='ArrowLeft')i=(i+order.length-1)%order.length;else if(event.key==='Home')i=0;else if(event.key==='End')i=order.length-1;else return;event.preventDefault();showTab(order[i].dataset.tab);order[i].focus();});});
@@ -77,6 +77,13 @@ function noteLink(href,label){
   if(!href)return '';
   return '<a href="'+esc(href)+'" target="_blank" rel="noopener noreferrer">'+esc(label)+' ↗</a>';
 }
+
+function paintTravelInfo(payload){
+  $('#flightCards').innerHTML=flights.map(f=>'<article class="paper section-card"><small>'+esc(f.date)+' · '+esc(f.party)+'</small><h3>'+esc(f.airline)+' '+esc(f.number)+'</h3><p>'+esc(f.departure)+' '+esc(f.from)+' → '+esc(f.arrival)+' '+esc(f.to)+'</p></article>').join('');
+  $('#hotelCards').innerHTML=(payload.hotels||[]).map(h=>'<article class="paper section-card"><small>'+esc(h.checkIn)+' 入住 → '+esc(h.checkOut)+' 退房 · '+h.nights+' 晚</small><h3>🏡 '+esc(h.name)+'</h3>'+(h.address?'<p>'+esc(h.address)+'</p>':'')+noteLink('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(h.query),'住宿地圖')+'</article>').join('');
+  $('#backupCards').innerHTML=(payload.backupStops||[]).map(s=>'<article class="paper section-card"><small>備選 · 參考停留 '+esc(duration(s.duration))+'</small><h3>'+esc(s.name)+'</h3>'+noteLink('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.name+' 沖繩'),'景點地圖')+'</article>').join('');
+}
+
 async function loadItinerary(){
   try {
     // Cache bypass keeps schedule edits visible without rebuilding CSS/JS.
@@ -96,6 +103,7 @@ async function loadItinerary(){
     routeNotes=payload.routeNotes||{};
     railSchedules=payload.railSchedules||[];
     paintJourney();
+    paintTravelInfo(payload);
     setupChecklist();
     draw();
     refreshProgress();

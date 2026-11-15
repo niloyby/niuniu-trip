@@ -101,7 +101,7 @@ function drawTravelRoute() {
   const day = days[current];
   if (routeDay !== current) { routeDay = current; routeSelection = 0; }
   $('#routeDays').innerHTML = days.map((d, di) => '<button type="button" class="retro-button" data-route-day="' + di + '" aria-pressed="' + (di === current) + '">DAY ' + (di + 1) + ' · ' + d.date.slice(5).replace('-', '/') + '</button>').join('');
-  $('#routeTitle').textContent = 'DAY ' + (current + 1) + ' / ' + day.title;
+  $('#routeTitle').textContent = 'DAY ' + (current + 1) + ' / ' + day.title + ' · ' + day.party;
   const cols = matchMedia('(max-width:760px)').matches ? 2 : 3;
   $('#routeBoard').innerHTML = day.stops.map((stop, i) => {
     const row = Math.floor(i / cols);
