@@ -9,6 +9,7 @@ let reservations=[];
 let shopping={};
 let teaNotes=[];
 let routeNotes={};
+let stopNotes={};
 let railSchedules=[];
 
 let current=0;
@@ -53,7 +54,7 @@ function renderWalkingRoute(day){
 function draw(){const d=days[current];$('#dateRail').innerHTML=days.map((e,i)=>'<button type="button" class="day-button '+(i===current?'selected':'')+'" data-day="'+i+'" aria-pressed="'+(i===current)+'"><small>DAY '+(i+1)+'</small><strong>'+e.date.slice(5).replace('-','/')+'</strong><span class="dow">週'+e.dow+'</span></button>').join('');
 $('#dateRail').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{current=Number(b.dataset.day);draw();}));
 $('#dayTitle').innerHTML='<div class="day-icon">'+esc(d.emoji)+'</div><div><span>DAY '+(current+1)+' / '+days.length+' · '+esc(d.date)+'</span><h3>'+esc(d.title)+'</h3><p>'+esc(d.party)+' · '+esc(d.transport)+'</p><p>'+esc(current===days.length-1?'今日退房：':'今晚住宿：')+esc(d.hotel.name)+'</p></div>';
-$('#stops').innerHTML=d.stops.map((s,i)=>{const [time,name,len]=s;const [em,tag,bg]=category(name);const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);return '<article class="stop" style="--index:'+i+'"><span class="stop-time">'+esc(stopTime(d,i))+'</span><span class="stop-dot"></span><div class="stop-card '+(spots[name]?'warning':'')+'"><div class="stop-name">'+em+' '+esc(name)+'</div><div class="stop-metas"><span class="chip" style="background:'+bg+'">'+tag+'</span><span class="stop-length">⏱ '+duration(len)+'</span><a class="maplink" href="'+map+'" target="_blank" rel="noopener noreferrer">地圖 ↗</a></div>'+(spots[name]?'<div class="warning-text">⚠ '+esc(spots[name])+'</div>':'')+(routeNotes[name]?'<div class="route-extra">🛍️ '+esc(routeNotes[name])+'</div>':'')+(reservations.some(r=>r.date===d.date&&r.place===name)?'<div class="reservation-pill">🍋 已訂位 · '+esc(reservations.find(r=>r.date===d.date&&r.place===name).time)+'</div>':'')+'</div></article>'}).join('');
+$('#stops').innerHTML=d.stops.map((s,i)=>{const [time,name,len]=s;const [em,tag,bg]=category(name);const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);return '<article class="stop" style="--index:'+i+'"><span class="stop-time">'+esc(stopTime(d,i))+'</span><span class="stop-dot"></span><div class="stop-card '+(spots[name]?'warning':'')+'"><div class="stop-name">'+em+' '+esc(name)+'</div><div class="stop-metas"><span class="chip" style="background:'+bg+'">'+tag+'</span><span class="stop-length">⏱ '+duration(len)+'</span><a class="maplink" href="'+map+'" target="_blank" rel="noopener noreferrer">地圖 ↗</a></div>'+(spots[name]?'<div class="warning-text">⚠ '+esc(spots[name])+'</div>':'')+(routeNotes[name]?'<div class="route-extra">🛍️ '+esc(routeNotes[name])+'</div>':'')+renderStopNotes(name)+(reservations.some(r=>r.date===d.date&&r.place===name)?'<div class="reservation-pill">🍋 已訂位 · '+esc(reservations.find(r=>r.date===d.date&&r.place===name).time)+'</div>':'')+'</div></article>'}).join('');
 $('#dayHint').textContent=hints[current];renderWalkingRoute(d);document.dispatchEvent(new Event('itineraryrender'));}
 const tabs=['trip','flight','route','prep','notes','backup'];
 tabs.forEach(t=>{const button=document.querySelector('[data-tab='+t+']');button.setAttribute('role','tab');button.id='tab-'+t;button.setAttribute('aria-controls','view-'+t);const panel=$('#view-'+t);panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby','tab-'+t);});
@@ -84,6 +85,15 @@ function paintTravelInfo(payload){
   $('#backupCards').innerHTML=(payload.backupStops||[]).map(s=>'<article class="paper section-card"><small>備選 · 參考停留 '+esc(duration(s.duration))+'</small><h3>'+esc(s.name)+'</h3>'+noteLink('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.name+' 沖繩'),'景點地圖')+'</article>').join('');
 }
 
+
+function renderStopNotes(name){
+  const n=stopNotes[name];if(!n)return '';
+  return '<details class="route-extra" open><summary><b>📝 '+esc(n.title)+'</b></summary><ul style="padding-left:20px;line-height:1.85">'+n.items.map(t=>'<li style="margin:6px 0">'+esc(t)+'</li>').join('')+'</ul><div class="note-links">'+n.sources.map(s=>noteLink(s.url,s.label)).join(' ')+'</div><small>核對：2026/11/17；優惠與庫存以門市當日公告為準。</small></details>';
+}
+function paintShoppingNotes(){
+  $('#shoppingNotes').innerHTML='<div class="heading"><h2>📝 順路購物筆記</h2></div>'+days.flatMap(day=>day.stops.filter(s=>stopNotes[s[1]]).map(s=>'<article class="paper section-card"><small>'+esc(day.date)+' · '+esc(s[0])+'</small><h3>'+esc(s[1])+'</h3>'+renderStopNotes(s[1])+'</article>')).join('');
+}
+
 async function loadItinerary(){
   try {
     // Cache bypass keeps schedule edits visible without rebuilding CSS/JS.
@@ -101,9 +111,11 @@ async function loadItinerary(){
     shopping=payload.shopping||{};
     teaNotes=payload.teaNotes||[];
     routeNotes=payload.routeNotes||{};
+    stopNotes=payload.stopNotes||{};
     railSchedules=payload.railSchedules||[];
     paintJourney();
     paintTravelInfo(payload);
+    paintShoppingNotes();
     setupChecklist();
     draw();
     refreshProgress();

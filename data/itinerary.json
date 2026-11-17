@@ -444,5 +444,116 @@
     "company": "OTS 臨空豐崎營業所（那霸機場）",
     "pickup": "2026-11-20 09:00",
     "dropoff": "2026-11-23 12:00"
-  }
+  },
+  "stopNotes": {
+    "GU iias沖繩豐崎店": {
+      "title": "11/20 感謝祭第一站",
+      "items": [
+        "GU、UNIQLO 日本感謝祭：11/20～11/26；本行程在活動期間。這一站原本就排 GU，先看想買的尺寸、顏色與價格。",
+        "GU 吉伊卡哇聯名第一彈 11/20 開賣；熱門款可能發整理券，首日部分門市營業時間調整，庫存與排隊方式以店內公告為準。",
+        "GU 的 App 會員特價，結帳前先確認日本版會員條碼可用。這站只有 30 分鐘，先買清單上的品項；下午 PARCO、11/22 來客夢還能補逛。"
+      ],
+      "sources": [
+        {
+          "label": "GU 感謝祭",
+          "url": "https://www.gu-global.com/jp/ja/feature/contents"
+        },
+        {
+          "label": "GU 吉伊卡哇販售規則",
+          "url": "https://faq.gu-global.com/articles/Knowledge/100015685/"
+        }
+      ]
+    },
+    "UNIQLO AEON Nago SC": {
+      "title": "11/21 名護 UNIQLO 感謝祭",
+      "items": [
+        "原定 19:08～21:08，共 2 小時；可集中補齊 UNIQLO 尺寸，11/20～11/26 感謝祭期間適用。",
+        "先看 HEATTECH、刷毛與輕暖外套，再核對店內活動價；不是所有款式都有特價。",
+        "11/20～11/23 店舖單筆消費達 10,000 日圓的收納大托特包活動，每日先到先得、送完為止；晚間到店不保證有贈品。以店內認定門檻為準。"
+      ],
+      "sources": [
+        {
+          "label": "UNIQLO 感謝祭",
+          "url": "https://www.uniqlo.com/jp/ja/special-feature/kanshasai"
+        }
+      ]
+    },
+    "SAN-A浦添西海岸 PARCO CITY": {
+      "title": "11/20 PARCO：京喚羽＋感謝祭＋角色雜貨",
+      "items": [
+        "優先：2F 橘區 fufu/fufu+ 買京喚羽 TOKIO。官網列有 INKARAMI PLATINUM／PREMIUM；先帶好要買的系列或瓶身圖片。網友提過折扣，當天價格與庫存要現場確認。",
+        "感謝祭順逛：GU 在 2F 綠區；UNIQLO 在 3F 橘區。11/20～11/26 活動，可與上午 iias GU 比較缺碼及缺色，不必兩邊重複逛完整輪。",
+        "吉伊卡哇：3F 綠區「シーサーのおみやげやさん」看獅薩角色周邊；1F 綠區另有吉伊卡哇餐廳，用餐先查預約／整理券，不直接視為可入座。",
+        "角色周邊加逛：3F 西村裕二購買部出張所、橡子共和國、Nintendo Area（任天堂商品區），按喜歡的角色挑一兩間。",
+        "生活小物加逛：1F HANDS、3COINS＋plus；2F PLAZA。可優先看收納、旅行用品、美妝雜貨。",
+        "有餘裕再看：3F POP MART、扭蛋專門店オトナモ；1F SAN-A 食品館買零食。網友也常推海景休息區。",
+        "原定 16:53～18:53，19:30 要到琉球之牛：建議先 fufu+，再挑服飾或角色店；以上是選逛清單，兩小時不安排全部逛完。"
+      ],
+      "sources": [
+        {
+          "label": "fufu+ 官方與 TOKIO 品項",
+          "url": "https://www.parcocity.jp/floorguide/detail/?scd=000540"
+        },
+        {
+          "label": "PARCO 樓層／店家",
+          "url": "https://www.parcocity.jp/floorguide/shop/"
+        },
+        {
+          "label": "GU 位置",
+          "url": "https://www.parcocity.jp/floorguide/detail/?scd=000508"
+        },
+        {
+          "label": "網友逛街整理",
+          "url": "https://www.funtime.com.tw/blog/funtime/okinawa-parco-city-guide"
+        },
+        {
+          "label": "UNIQLO 感謝祭",
+          "url": "https://www.uniqlo.com/jp/ja/special-feature/kanshasai"
+        },
+        {
+          "label": "GU 感謝祭",
+          "url": "https://www.gu-global.com/jp/ja/feature/contents"
+        }
+      ]
+    },
+    "mont-bell 沖繩來客夢店": {
+      "title": "11/22 永旺夢樂城來客夢：不只 mont-bell",
+      "items": [
+        "原定 13:53～16:23，共 2.5 小時；這段就是 AEON MALL 沖繩來客夢。先逛主清單，其他品牌選逛。",
+        "你的主清單：寶可夢中心 1F、LOFT 1F[109]、星巴克 2F[211]、mont-bell 2F[220]；寶可夢可找沖繩主題商品，庫存現場確認。",
+        "扭蛋主攻 4F：ガチャガチャの森[427]、Dream Capsule[455]；可看吉伊卡哇、寶可夢等角色，款式與庫存不是固定。",
+        "吉伊卡哇想買先記著：目前未確認 11/22 有專門快閃，先到 4F 扭蛋店／VILLAGE VANGUARD 尋找角色商品；想集中買獅薩周邊，11/20 PARCO 的店更明確。",
+        "感謝祭補逛：GU 1F[126]、UNIQLO 1F[137,241]；可補前兩天缺碼的衣服。不是另加一站，只在同商場順逛。",
+        "網友常推、也符合你們喜好的加逛：4F 橡子共和國（吉卜力）、Sanrio；1F 大水族箱短暫休息。兩小時半以寶可夢＋LOFT＋扭蛋為主。",
+        "購買生活小物可再看 1F 3COINS＋plus；有需要補零食才去 2F AEON STYLE。建議以 1F→2F→4F 的順序集中逛，避免來回上下樓。"
+      ],
+      "sources": [
+        {
+          "label": "來客夢官方樓層店家",
+          "url": "https://en.aeonmall.global/mall/okinawarycom/shops-entertainment"
+        },
+        {
+          "label": "寶可夢中心官方",
+          "url": "https://shop.pokemon.co.jp/ja/shop/pokemoncenter-okinawa/"
+        },
+        {
+          "label": "星巴克官方位置",
+          "url": "https://okinawarycom.aeonmall.jp/shop/109c3d9b-eca6-42f0-a725-f656f06f6138"
+        },
+        {
+          "label": "網友購物整理",
+          "url": "https://niniandblue.com/blog/post/okinawarycom"
+        },
+        {
+          "label": "UNIQLO 感謝祭",
+          "url": "https://www.uniqlo.com/jp/ja/special-feature/kanshasai"
+        },
+        {
+          "label": "GU 感謝祭",
+          "url": "https://www.gu-global.com/jp/ja/feature/contents"
+        }
+      ]
+    }
+  },
+  "shoppingNotesUpdated": "2026-11-17"
 }
